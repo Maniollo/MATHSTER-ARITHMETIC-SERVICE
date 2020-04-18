@@ -1,14 +1,16 @@
 package marmas.arithmetic.service;
 
+import lombok.AllArgsConstructor;
 import marmas.arithmetic.model.MathOperationType;
 import marmas.arithmetic.model.OperationFactors;
 import org.springframework.stereotype.Service;
 
-import static marmas.arithmetic.model.MathOperationType.ADDITION;
-
 @Service
+@AllArgsConstructor
 public class MathOperationService {
+    private final AdditionFactorsService additionFactorsService;
+
     public OperationFactors getFactorsFor(MathOperationType operation, int range) {
-        return new OperationFactors(0,0, ADDITION);
+        return additionFactorsService.getFactors(range);
     }
 }
