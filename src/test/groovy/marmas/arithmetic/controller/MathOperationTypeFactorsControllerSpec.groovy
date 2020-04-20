@@ -74,6 +74,11 @@ class MathOperationTypeFactorsControllerSpec extends Specification {
         call("/operation?operationType=ADDITION&range=-1").andExpect(status().isBadRequest())
     }
 
+    def "should return BAD REQUEST when operationType is missing"() {
+        expect:
+        call("/operation").andExpect(status().isBadRequest())
+    }
+
     private ResultActions call(String endpoint) {
         mvc.perform(get(endpoint))
     }
