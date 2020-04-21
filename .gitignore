@@ -11,3 +11,6 @@ target/
 
 mvnw*
 
+### Log files
+*.log
+
