@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import marmas.arithmetic.model.MathOperationType;
 import marmas.arithmetic.model.OperationFactors;
 import marmas.arithmetic.service.MathOperationService;
@@ -20,6 +21,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequiredArgsConstructor
 @Validated
+@Slf4j
 class MathOperationController {
     private final MathOperationService mathOperationService;
 
@@ -33,6 +35,7 @@ class MathOperationController {
     OperationFactors getFactors(
             @NotNull  @RequestParam MathOperationType operationType,
             @RequestParam(required = false, defaultValue = "10") @Min(1) Integer range) {
+        log.info("========= GENERATE FACTORS FOR {} and range {} =========", operationType.name(), range);
         return mathOperationService.getFactorsFor(operationType, range);
     }
 }
