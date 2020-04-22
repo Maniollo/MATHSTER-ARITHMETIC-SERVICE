@@ -6,6 +6,8 @@ import marmas.arithmetic.model.MathOperationType;
 import marmas.arithmetic.model.OperationFactors;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static java.lang.String.format;
 
 @Service
@@ -14,8 +16,16 @@ import static java.lang.String.format;
 public class MathOperationService {
     private final AdditionFactorsService additionFactorsService;
     private final SubtractionFactorsService subtractionFactorsService;
+    private final FactorGenerator numberGenerator;
 
-    public OperationFactors getFactorsFor(MathOperationType operation, int range) {
+    public OperationFactors getFactorsFor(List<MathOperationType> operationTypes, int range) {
+
+        MathOperationType operation = operationTypes.size() == 1
+                ? operationTypes.get(0)
+                : MathOperationType.values()[numberGenerator.generate(operationTypes.size()-1)];
+
+        log.info("========= GENERATE FACTORS FOR {} and range {} =========", operation.name(), range);
+
         OperationFactors factors;
         switch (operation) {
             case SUBTRACTION:

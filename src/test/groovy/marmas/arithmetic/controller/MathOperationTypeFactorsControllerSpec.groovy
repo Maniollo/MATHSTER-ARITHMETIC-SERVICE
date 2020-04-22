@@ -26,12 +26,12 @@ class MathOperationTypeFactorsControllerSpec extends Specification {
 
     def "should return operation data for addition"() {
         when: 'calling getOperationFactors for addition with numeric range 10'
-        def mvcResult = call("/operation?operationType=ADDITION&range=10")
+        def mvcResult = call("/operation?operationTypes=ADDITION&range=10")
                 .andExpect(status().is2xxSuccessful())
                 .andReturn()
 
         then: 'operation service return factors'
-        mathOperationService.getFactorsFor(ADDITION, 10) >> new OperationFactors(3, 5, ADDITION)
+        mathOperationService.getFactorsFor([ADDITION], 10) >> new OperationFactors(3, 5, ADDITION)
 
         noExceptionThrown()
 
@@ -44,12 +44,12 @@ class MathOperationTypeFactorsControllerSpec extends Specification {
 
     def "should return operation data for addition with default range 10 if not provided"() {
         when: 'calling getOperationFactors for addition with numeric range 10'
-        def mvcResult = mvc.perform(get("/operation?operationType=ADDITION"))
+        def mvcResult = mvc.perform(get("/operation?operationTypes=ADDITION"))
                 .andExpect(status().is2xxSuccessful())
                 .andReturn()
 
         then: 'operation service return factors'
-        mathOperationService.getFactorsFor(ADDITION, 10) >> new OperationFactors(3, 5, ADDITION)
+        mathOperationService.getFactorsFor([ADDITION], 10) >> new OperationFactors(3, 5, ADDITION)
 
         noExceptionThrown()
 
@@ -62,12 +62,12 @@ class MathOperationTypeFactorsControllerSpec extends Specification {
 
     def "should return operation data for subtraction"() {
         when: 'calling getOperationFactors for subtraction with numeric range 10'
-        def mvcResult = call("/operation?operationType=SUBTRACTION&range=10")
+        def mvcResult = call("/operation?operationTypes=SUBTRACTION&range=10")
                 .andExpect(status().is2xxSuccessful())
                 .andReturn()
 
         then: 'operation service return factors'
-        mathOperationService.getFactorsFor(SUBTRACTION, 10) >> new OperationFactors(5, 3, SUBTRACTION)
+        mathOperationService.getFactorsFor([SUBTRACTION], 10) >> new OperationFactors(5, 3, SUBTRACTION)
 
         noExceptionThrown()
 
@@ -80,12 +80,48 @@ class MathOperationTypeFactorsControllerSpec extends Specification {
 
     def "should return operation data for subtraction with default range 10 if not provided"() {
         when: 'calling getOperationFactors for subtraction with numeric range 10'
-        def mvcResult = mvc.perform(get("/operation?operationType=SUBTRACTION"))
+        def mvcResult = mvc.perform(get("/operation?operationTypes=SUBTRACTION"))
                 .andExpect(status().is2xxSuccessful())
                 .andReturn()
 
         then: 'operation service return factors'
-        mathOperationService.getFactorsFor(SUBTRACTION, 10) >> new OperationFactors(5, 3, SUBTRACTION)
+        mathOperationService.getFactorsFor([SUBTRACTION], 10) >> new OperationFactors(5, 3, SUBTRACTION)
+
+        noExceptionThrown()
+
+        when: 'inspecting the content'
+        def content = mvcResult.response.getContentAsString()
+
+        then: 'result contains addition factors and operation type'
+        content == "{\"factorA\":5,\"factorB\":3,\"operationType\":\"SUBTRACTION\"}"
+    }
+
+    def "should remove duplication of operation"() {
+        when: 'calling getOperationFactors for subtraction with numeric range 10'
+        def mvcResult = mvc.perform(get("/operation?operationTypes=SUBTRACTION,SUBTRACTION"))
+                .andExpect(status().is2xxSuccessful())
+                .andReturn()
+
+        then: 'operation service return factors'
+        mathOperationService.getFactorsFor([SUBTRACTION], 10) >> new OperationFactors(5, 3, SUBTRACTION)
+
+        noExceptionThrown()
+
+        when: 'inspecting the content'
+        def content = mvcResult.response.getContentAsString()
+
+        then: 'result contains addition factors and operation type'
+        content == "{\"factorA\":5,\"factorB\":3,\"operationType\":\"SUBTRACTION\"}"
+    }
+
+    def "should return operation data for either subtraction or addition if both provided"() {
+        when: 'calling getOperationFactors for subtraction and addition with numeric range 10'
+        def mvcResult = mvc.perform(get("/operation?operationTypes=SUBTRACTION,ADDITION"))
+                .andExpect(status().is2xxSuccessful())
+                .andReturn()
+
+        then: 'operation service return factors'
+        mathOperationService.getFactorsFor([SUBTRACTION, ADDITION], 10) >> new OperationFactors(5, 3, SUBTRACTION)
 
         noExceptionThrown()
 
@@ -98,17 +134,22 @@ class MathOperationTypeFactorsControllerSpec extends Specification {
 
     def "should return BAD REQUEST if operation type is unknown"() {
         expect:
-        call("/operation?operationType=DUMMY&range=10").andExpect(status().isBadRequest())
+        call("/operation?operationTypes=DUMMY&range=10").andExpect(status().isBadRequest())
+    }
+
+    def "should return BAD REQUEST when operationTypse is empty"() {
+        expect:
+        call("/operation?operationTypes=").andExpect(status().isBadRequest())
     }
 
     def "should return BAD REQUEST when range equals 0"() {
         expect:
-        call("/operation?operationType=ADDITION&range=0").andExpect(status().isBadRequest())
+        call("/operation?operationTypes=ADDITION&range=0").andExpect(status().isBadRequest())
     }
 
     def "should return BAD REQUEST when range lower than 0"() {
         expect:
-        call("/operation?operationType=ADDITION&range=-1").andExpect(status().isBadRequest())
+        call("/operation?operationTypes=ADDITION&range=-1").andExpect(status().isBadRequest())
     }
 
     def "should return BAD REQUEST when operationType is missing"() {

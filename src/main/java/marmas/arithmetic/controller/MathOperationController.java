@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -33,9 +36,8 @@ class MathOperationController {
     @ApiOperation(value = "Create factors for specified math operation", nickname = "Create factors for specified math operation")
     @GetMapping(value = "/operation", produces = APPLICATION_JSON_VALUE)
     OperationFactors getFactors(
-            @NotNull  @RequestParam MathOperationType operationType,
+            @NotNull @NotEmpty @RequestParam List<MathOperationType> operationTypes,
             @RequestParam(required = false, defaultValue = "10") @Min(1) Integer range) {
-        log.info("========= GENERATE FACTORS FOR {} and range {} =========", operationType.name(), range);
-        return mathOperationService.getFactorsFor(operationType, range);
+        return mathOperationService.getFactorsFor(operationTypes.stream().distinct().collect(toList()), range);
     }
 }
