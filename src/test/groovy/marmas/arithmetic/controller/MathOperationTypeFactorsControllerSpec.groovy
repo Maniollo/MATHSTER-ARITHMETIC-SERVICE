@@ -12,6 +12,7 @@ import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
 import static marmas.arithmetic.model.MathOperationType.ADDITION
+import static marmas.arithmetic.model.MathOperationType.SUBTRACTION
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -57,6 +58,42 @@ class MathOperationTypeFactorsControllerSpec extends Specification {
 
         then: 'result contains addition factors and operation type'
         content == "{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"}"
+    }
+
+    def "should return operation data for subtraction"() {
+        when: 'calling getOperationFactors for subtraction with numeric range 10'
+        def mvcResult = call("/operation?operationType=SUBTRACTION&range=10")
+                .andExpect(status().is2xxSuccessful())
+                .andReturn()
+
+        then: 'operation service return factors'
+        mathOperationService.getFactorsFor(SUBTRACTION, 10) >> new OperationFactors(5, 3, SUBTRACTION)
+
+        noExceptionThrown()
+
+        when: 'inspecting the content'
+        def content = mvcResult.response.getContentAsString()
+
+        then: 'result contains addition factors and operation type'
+        content == "{\"factorA\":5,\"factorB\":3,\"operationType\":\"SUBTRACTION\"}"
+    }
+
+    def "should return operation data for subtraction with default range 10 if not provided"() {
+        when: 'calling getOperationFactors for subtraction with numeric range 10'
+        def mvcResult = mvc.perform(get("/operation?operationType=SUBTRACTION"))
+                .andExpect(status().is2xxSuccessful())
+                .andReturn()
+
+        then: 'operation service return factors'
+        mathOperationService.getFactorsFor(SUBTRACTION, 10) >> new OperationFactors(5, 3, SUBTRACTION)
+
+        noExceptionThrown()
+
+        when: 'inspecting the content'
+        def content = mvcResult.response.getContentAsString()
+
+        then: 'result contains addition factors and operation type'
+        content == "{\"factorA\":5,\"factorB\":3,\"operationType\":\"SUBTRACTION\"}"
     }
 
     def "should return BAD REQUEST if operation type is unknown"() {
