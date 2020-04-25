@@ -10,7 +10,7 @@ public class ResultAttemptService {
     public ResultAttempt verifyResultAttempt(ResultAttempt resultAttempt) {
 
         if (resultAttempt.getIsCorrect()) {
-            throw new InvalidRequestException();
+            throw new InvalidRequestException("Invalid request.");
         }
 
         return new ResultAttempt(
@@ -28,8 +28,7 @@ public class ResultAttemptService {
             case SUBTRACTION:
                 return operationFactors.getFactorA() - operationFactors.getFactorB() == result;
             default:
-                // TODO: Add exception handler and exception msg
-                throw new InvalidRequestException();
+                throw new InvalidRequestException("Unsupported operation type.");
         }
     }
 }

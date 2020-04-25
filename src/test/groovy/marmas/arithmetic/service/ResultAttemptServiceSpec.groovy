@@ -1,13 +1,11 @@
 package marmas.arithmetic.service
 
-import com.sun.nio.sctp.IllegalReceiveException
 import marmas.arithmetic.exception.InvalidRequestException
 import marmas.arithmetic.model.MathOperationType
 import marmas.arithmetic.model.OperationFactors
 import marmas.arithmetic.model.ResultAttempt
 import spock.lang.Specification
 import spock.lang.Subject
-
 
 class ResultAttemptServiceSpec extends Specification {
     @Subject ResultAttemptService resultAttemptService = new  ResultAttemptService()
@@ -20,7 +18,8 @@ class ResultAttemptServiceSpec extends Specification {
         resultAttemptService.verifyResultAttempt(attempt)
 
         then:
-        thrown InvalidRequestException
+        InvalidRequestException ex = thrown()
+        ex.message == "Invalid request."
     }
 
     def "should verify correct addition attempt"() {
