@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.ResultActions
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
@@ -29,38 +30,62 @@ class ResultAttemptControllerSpec extends Specification {
 
     def "should return verified result attempt"() {
         when:
-        def request = mvc.perform(post("/results")
-                .contentType(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .content("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"userId\":123,\"result\":8,\"isCorrect\":false}"))
+        def request = call("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":8,\"isCorrect\":false}")
                 .andExpect(status().isOk())
                 .andReturn()
 
         then:
-        resultAttemptService.verifyResultAttempt(resultAttempt(false)) >> resultAttempt(true)
+        resultAttemptService.verifyResultAttempt(resultAttempt(false, 8)) >> resultAttempt(true, 8)
 
         and:
         noExceptionThrown()
 
         and:
-        request.response.getContentAsString() == "{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"userId\":123,\"result\":8,\"isCorrect\":true}"
+        request.response.getContentAsString() == "{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":8,\"correct\":true}"
     }
 
     def "should return BAD REQUEST if result attempt contains set isCorrect flag"() {
         when:
-        resultAttemptService.verifyResultAttempt(resultAttempt(true)) >> { throw new InvalidRequestException("Invalid request.") }
+        resultAttemptService.verifyResultAttempt(resultAttempt(true, 8)) >> { throw new InvalidRequestException("Invalid request.") }
 
         then:
+        call("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":8,\"correct\":true}")
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("{\"errors\":[\"Flag isCorrect cannot be set\"],\"errorMessage\":\"Validation failed. 1 error(s)\"}"))
+    }
+
+    def "should return BAD REQUEST when result attempt has missing parameters"() {
+        expect:
+        call("{\"userId\":123,\"result\":8,\"isCorrect\":false}")
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("{\"errors\":[\"Operation Factors must be provided\"],\"errorMessage\":\"Validation failed. 1 error(s)\"}"))
+    }
+
+    def "should return verified result attempt when result is missing"() {
+        when:
+        def request = call("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"isCorrect\":false}")
+                .andExpect(status().isOk())
+                .andReturn()
+
+        then:
+        resultAttemptService.verifyResultAttempt(resultAttempt(false, 0)) >> resultAttempt(false, 0)
+
+        and:
+        noExceptionThrown()
+
+        and:
+        request.response.getContentAsString() == "{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":0,\"correct\":false}"
+    }
+
+    private ResultActions call(String content) {
         mvc.perform(post("/results")
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
-                .content("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"userId\":123,\"result\":8,\"isCorrect\":true}"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("Invalid request."))
+                .content(content))
     }
 
-    private static ResultAttempt resultAttempt(Boolean isCorrect) {
-        new ResultAttempt(new OperationFactors(3, 5, MathOperationType.ADDITION), 123, 8, isCorrect)
+    private static ResultAttempt resultAttempt(Boolean isCorrect, Integer result) {
+        new ResultAttempt(new OperationFactors(3, 5, MathOperationType.ADDITION), result, isCorrect)
     }
 
     @TestConfiguration
