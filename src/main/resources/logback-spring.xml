@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <springProperty scope="context" name="LOG_PATH" source="log.dir" defaultValue = "./startup-logs"/>
-    <springProperty scope="context" name="SERVICE_NAME" source="log.filename"/>
+    <springProperty scope="context" name="LOG_PATH" source="logging.file.path" defaultValue = "./startup-logs"/>
+    <springProperty scope="context" name="SERVICE_NAME" source="logging.file.name"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
