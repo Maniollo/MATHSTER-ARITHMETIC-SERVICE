@@ -1,7 +1,6 @@
 package marmas.arithmetic.controller;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,10 +9,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolationException;
 
-@ControllerAdvice
-class ConstraintViolationExceptionHandler extends ResponseEntityExceptionHandler {
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
+@ControllerAdvice(assignableTypes = MathOperationController.class)
+class MathOperationControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ConstraintViolationException.class})
     protected ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException e, WebRequest request) {
-        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), BAD_REQUEST, request);
     }
 }
