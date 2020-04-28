@@ -2,7 +2,7 @@ package marmas.arithmetic.service
 
 import spock.lang.Specification
 
-class AdditionResultAttemptServiceSpec extends Specification {
+class AdditionResultAttemptRequestServiceSpec extends Specification {
     def "should verify whether attempt is correct"() {
         expect:
         new AdditionResultAttemptService().verifyAdditionAttempt(a, b, attempt) == result

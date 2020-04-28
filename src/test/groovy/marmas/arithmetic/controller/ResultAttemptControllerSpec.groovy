@@ -3,7 +3,8 @@ package marmas.arithmetic.controller
 import marmas.arithmetic.exception.InvalidRequestException
 import marmas.arithmetic.model.MathOperationType
 import marmas.arithmetic.model.OperationFactors
-import marmas.arithmetic.model.ResultAttempt
+import marmas.arithmetic.model.ResultAttemptRequest
+import marmas.arithmetic.model.ResultAttemptResponse
 import marmas.arithmetic.service.ResultAttemptService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -35,13 +36,13 @@ class ResultAttemptControllerSpec extends Specification {
                 .andReturn()
 
         then:
-        resultAttemptService.verifyResultAttempt(resultAttempt(false, 8)) >> resultAttempt(true, 8)
+        resultAttemptService.verifyResultAttempt(resultAttempt(false, 8)) >> new ResultAttemptResponse(true,)
 
         and:
         noExceptionThrown()
 
         and:
-        request.response.getContentAsString() == "{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":8,\"correct\":true}"
+        request.response.getContentAsString() == "{\"correct\":true}"
     }
 
     def "should return BAD REQUEST if result attempt contains set isCorrect flag"() {
@@ -68,13 +69,13 @@ class ResultAttemptControllerSpec extends Specification {
                 .andReturn()
 
         then:
-        resultAttemptService.verifyResultAttempt(resultAttempt(false, 0)) >> resultAttempt(false, 0)
+        resultAttemptService.verifyResultAttempt(resultAttempt(false, 0)) >> new ResultAttemptResponse(false)
 
         and:
         noExceptionThrown()
 
         and:
-        request.response.getContentAsString() == "{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":0,\"correct\":false}"
+        request.response.getContentAsString() == "{\"correct\":false}"
     }
 
     private ResultActions call(String content) {
@@ -84,8 +85,8 @@ class ResultAttemptControllerSpec extends Specification {
                 .content(content))
     }
 
-    private static ResultAttempt resultAttempt(Boolean isCorrect, Integer result) {
-        new ResultAttempt(new OperationFactors(3, 5, MathOperationType.ADDITION), result, isCorrect)
+    private static ResultAttemptRequest resultAttempt(Boolean isCorrect, Integer result) {
+        new ResultAttemptRequest(new OperationFactors(3, 5, MathOperationType.ADDITION), result, isCorrect)
     }
 
     @TestConfiguration

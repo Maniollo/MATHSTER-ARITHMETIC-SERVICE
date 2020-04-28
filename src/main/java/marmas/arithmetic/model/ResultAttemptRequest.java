@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode
-public class ResultAttempt {
+public class ResultAttemptRequest {
     @NotNull(message = "Operation Factors must be provided")
     private final OperationFactors operationFactors;
     private final int result;

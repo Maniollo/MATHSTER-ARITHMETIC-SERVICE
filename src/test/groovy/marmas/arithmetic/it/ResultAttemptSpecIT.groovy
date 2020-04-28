@@ -1,4 +1,4 @@
-package marmas.arithmetic
+package marmas.arithmetic.it
 
 import marmas.arithmetic.entity.ResultAttemptEntity
 import marmas.arithmetic.model.MathOperationType
@@ -14,7 +14,7 @@ import spock.lang.Specification
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class MathsterArithmeticServiceApplicationSpecIT extends Specification {
+class ResultAttemptSpecIT extends Specification {
     @Autowired
     ResultAttemptRepository resultAttemptRepository
 
