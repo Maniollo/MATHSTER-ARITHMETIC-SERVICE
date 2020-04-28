@@ -1,5 +1,6 @@
 package marmas.arithmetic.controller;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -25,6 +26,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 @Validated
 @Slf4j
+@Api(value = "MathOperationController")
 class MathOperationController {
     private final MathOperationService mathOperationService;
 
