@@ -20,3 +20,6 @@ spring:
     user: root
     password:
 
+mathster:
+  ui:
+    url: http://localhost:3000
