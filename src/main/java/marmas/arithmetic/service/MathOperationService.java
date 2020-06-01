@@ -7,6 +7,8 @@ import marmas.arithmetic.model.OperationFactors;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.lang.String.format;
 
@@ -22,10 +24,7 @@ public class MathOperationService {
 
         MathOperationType operation = operationTypes.size() == 1
                 ? operationTypes.get(0)
-                : MathOperationType.values()[numberGenerator.generate(operationTypes.size()-1)];
-
-        log.info("========= GENERATE FACTORS FOR {} and range {} =========", operation.name(), range);
-
+                : MathOperationType.values()[numberGenerator.generate(operationTypes.size() - 1)];
         OperationFactors factors;
         switch (operation) {
             case SUBTRACTION:
@@ -37,8 +36,14 @@ public class MathOperationService {
             default:
                 throw new UnsupportedOperationException(format("%s operation is unsupported", operation.name()));
         }
-        log.info("[factorA: {}, factorB: {} GENERATED]", factors.getFactorA(), factors.getFactorB());
+        log.info("Generated: {} {} {}", factors.getFactorA(), factors.getOperationType().getSign(), factors.getFactorB());
         return factors;
+    }
+
+    public List<OperationFactors> getBulkFactors(List<MathOperationType> operationTypes, int range, int quantity) {
+        return IntStream.range(0, quantity)
+                .mapToObj(it -> getFactorsFor(operationTypes, range))
+                .collect(Collectors.toList());
     }
 
 }

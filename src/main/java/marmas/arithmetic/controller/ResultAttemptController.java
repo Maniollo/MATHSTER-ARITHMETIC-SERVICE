@@ -2,8 +2,6 @@ package marmas.arithmetic.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import marmas.arithmetic.model.ResultAttemptRequest;
 import marmas.arithmetic.service.ResultAttemptService;
@@ -21,12 +19,8 @@ import javax.validation.Valid;
 class ResultAttemptController {
     private final ResultAttemptService resultAttemptService;
 
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = Boolean.class),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 500, message = "Service Error")
-    })
-    @ApiOperation(value = "Verify the result attempt and give back the result", nickname = "Verify the result attempt and give back the result")
+    @ApiOperation(value = "Verify the result attempt and give back the result", response = Boolean.class)
+    @ResponseContract
     @PostMapping(value = "/results")
     ResponseEntity verifyResultAttempt(@Valid @RequestBody ResultAttemptRequest resultAttemptRequest, Errors errors) {
         if (errors.hasErrors()) {

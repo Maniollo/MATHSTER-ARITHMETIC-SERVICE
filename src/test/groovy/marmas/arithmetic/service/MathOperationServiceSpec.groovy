@@ -61,6 +61,22 @@ class MathOperationServiceSpec extends Specification {
 
         then:
         factorsAttemptTwo == additionFactors
+    }
+
+    def "should bulk generate operations"() {
+        given:
+        additionFactorsService.getFactors(100) >> new OperationFactors(10, 20, ADDITION)
+
+        when:
+        def factors = mathOperationService.getBulkFactors([ADDITION], 100, 20)
+
+        then:
+        factors.size() == 20
+        factors.each {
+            assert it.factorA == 10
+            assert it.factorB == 20
+            assert it.operationType == ADDITION
+        }
 
     }
 }

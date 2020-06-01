@@ -2,8 +2,6 @@ package marmas.arithmetic.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marmas.arithmetic.model.MathOperationType;
@@ -30,12 +28,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 class MathOperationController {
     private final MathOperationService mathOperationService;
 
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = OperationFactors.class),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 500, message = "Service Error")
-    })
-    @ApiOperation(value = "Create factors for specified math operation", nickname = "Create factors for specified math operation")
+    @ApiOperation(value = "Create factors for specified math operation", response = OperationFactors.class)
+    @ResponseContract
     @GetMapping(value = "/operation", produces = APPLICATION_JSON_VALUE)
     OperationFactors getFactors(
             @NotNull @NotEmpty @RequestParam List<MathOperationType> operationTypes,

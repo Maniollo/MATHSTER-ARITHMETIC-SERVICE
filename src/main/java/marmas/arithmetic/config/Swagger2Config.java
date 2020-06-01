@@ -17,7 +17,6 @@ class Swagger2Config {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("Arithmetic Service API")
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("marmas.arithmetic.controller"))
@@ -27,7 +26,7 @@ class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Swagger API")
+                .title("MATHSTER-Arithmetic-Service API")
                 .description("Arithmetic Service API")
                 .contact(new Contact("Mariusz", "", "marmas.mat@gmail.com"))
                 .version("1.0.0")
