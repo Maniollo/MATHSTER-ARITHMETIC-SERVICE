@@ -11,8 +11,8 @@ import javax.validation.ConstraintViolationException;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
-@ControllerAdvice(assignableTypes = MathOperationController.class)
-class MathOperationControllerExceptionHandler extends ResponseEntityExceptionHandler {
+@ControllerAdvice(assignableTypes = {MathOperationController.class, TaskSheetExportController.class})
+class RequestConstraintValidationExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ConstraintViolationException.class})
     protected ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException e, WebRequest request) {
         return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), BAD_REQUEST, request);

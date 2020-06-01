@@ -20,6 +20,7 @@
         <compiler.plugin.version>3.8.0</compiler.plugin.version>
         <surefire.plugin.version>2.22.2</surefire.plugin.version>
         <failsafe.plugin.version>2.22.2</failsafe.plugin.version>
+        <itext.version>5.5.13</itext.version>
         <swagger.version>2.9.2</swagger.version>
         <h2.version>1.4.200</h2.version>
     </properties>
@@ -68,6 +69,11 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>${itext.version}</version>
         </dependency>
         <!--        TEST DEPENDENCIES-->
         <dependency>
