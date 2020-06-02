@@ -31,7 +31,7 @@ class ResultAttemptControllerSpec extends Specification {
 
     def "should return verified result attempt"() {
         when:
-        def request = call("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":8,\"isCorrect\":false}")
+        def request = call("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":8,\"isCorrect\":false,\"attemptNumber\":1}")
                 .andExpect(status().isOk())
                 .andReturn()
 
@@ -50,7 +50,7 @@ class ResultAttemptControllerSpec extends Specification {
         resultAttemptService.verifyResultAttempt(resultAttempt(true, 8)) >> { throw new InvalidRequestException("Invalid request.") }
 
         then:
-        call("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":8,\"correct\":true}")
+        call("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":8,\"correct\":true,\"attemptNumber\":1}")
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("{\"errors\":[\"Flag isCorrect cannot be set\"],\"errorMessage\":\"Validation failed. 1 error(s)\"}"))
     }
@@ -64,7 +64,7 @@ class ResultAttemptControllerSpec extends Specification {
 
     def "should return verified result attempt when result is missing"() {
         when:
-        def request = call("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"isCorrect\":false}")
+        def request = call("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"isCorrect\":false,\"attemptNumber\":1}")
                 .andExpect(status().isOk())
                 .andReturn()
 
@@ -86,7 +86,7 @@ class ResultAttemptControllerSpec extends Specification {
     }
 
     private static ResultAttemptRequest resultAttempt(Boolean isCorrect, Integer result) {
-        new ResultAttemptRequest(new OperationFactors(3, 5, MathOperationType.ADDITION), result, isCorrect)
+        new ResultAttemptRequest(new OperationFactors(3, 5, MathOperationType.ADDITION), result, isCorrect, 1)
     }
 
     @TestConfiguration

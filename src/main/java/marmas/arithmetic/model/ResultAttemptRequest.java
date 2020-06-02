@@ -16,4 +16,5 @@ public class ResultAttemptRequest {
     private final int result;
     @AssertFalse(message = "Flag isCorrect cannot be set")
     private final boolean correct;
+    private final int attemptNumber;
 }
