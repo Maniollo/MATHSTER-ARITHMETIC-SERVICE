@@ -89,6 +89,6 @@ class ResultAttemptRequestServiceSpec extends Specification {
     }
 
     private static ResultAttemptRequest resultAttemptRequest(MathOperationType operation, Integer factorA, Integer factorB, Integer result) {
-        new ResultAttemptRequest(new OperationFactors(factorA, factorB, operation), result, false)
+        new ResultAttemptRequest(new OperationFactors(factorA, factorB, operation), result, false, 1)
     }
 }
