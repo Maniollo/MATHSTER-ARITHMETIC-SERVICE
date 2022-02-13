@@ -22,7 +22,7 @@
         <failsafe.plugin.version>2.22.2</failsafe.plugin.version>
         <itext.version>5.5.13</itext.version>
         <swagger.version>2.9.2</swagger.version>
-        <h2.version>1.4.200</h2.version>
+        <h2.version>2.1.210</h2.version>
     </properties>
 
     <dependencies>
