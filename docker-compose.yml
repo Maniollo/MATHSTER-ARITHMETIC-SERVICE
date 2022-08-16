@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+
+  mathster-arithmetic-service:
+    container_name: mathster-arithmetic-service
+    build: .
+    image: mathster-arithmetic-service:0.0.1
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    networks:
+      - mathster-app-network
+
+  mysqldb:
+    image: mysql:8
+    restart: unless-stopped
+    container_name: mathster-db
+    volumes:
+      - ~/apps/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=T3stM3
+      - MYSQL_DATABASE=mathster_db
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=T3stM3 --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 20s
+      retries: 10
+    networks:
+      - mathster-app-network
+
+networks:
+  mathster-app-network:
+    driver: bridge
