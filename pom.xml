@@ -5,24 +5,27 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.6.RELEASE</version>
+        <version>2.5.0</version>
         <relativePath/>
     </parent>
 
     <groupId>marmas</groupId>
     <artifactId>mathster-arithmetic-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>MATHSTER-ARITHMETIC-SERVICE</name>
 
     <properties>
         <java.version>11</java.version>
-        <spock.version>1.2-groovy-2.5</spock.version>
+        <spock.version>2.1-groovy-2.5</spock.version>
         <compiler.plugin.version>3.8.0</compiler.plugin.version>
         <surefire.plugin.version>2.22.2</surefire.plugin.version>
         <failsafe.plugin.version>2.22.2</failsafe.plugin.version>
         <itext.version>5.5.13</itext.version>
-        <swagger.version>2.9.2</swagger.version>
-        <h2.version>2.1.210</h2.version>
+        <swagger.version>3.0.0</swagger.version>
+        <h2.version>2.1.214</h2.version>
+        <lombok.version>1.18.22</lombok.version>
+        <liquibase.version>4.15.0</liquibase.version>
+        <mysqlconnector.version>8.0.30</mysqlconnector.version>
     </properties>
 
     <dependencies>
@@ -40,13 +43,19 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>${mysqlconnector.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -57,7 +66,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>

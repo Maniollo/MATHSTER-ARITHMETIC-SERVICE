@@ -1,6 +1,5 @@
 package marmas.arithmetic.pdf;
 
-import com.google.common.base.Strings;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -85,7 +84,7 @@ public class TaskSheetGenerator {
             cell.setHorizontalAlignment(ALIGN_RIGHT);
             cell.setBorderWidth(0);
             cell.setFixedHeight(60);
-            Chunk dots = new Chunk(Strings.repeat(".", 15), CELL_FONT_DOTS);
+            Chunk dots = new Chunk(".".repeat(15), CELL_FONT_DOTS);
             operation.add(dots);
             table.addCell(cell);
         });

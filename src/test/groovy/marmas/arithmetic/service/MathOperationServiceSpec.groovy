@@ -10,7 +10,7 @@ import static marmas.arithmetic.model.MathOperationType.SUBTRACTION
 class MathOperationServiceSpec extends Specification {
     AdditionFactorsService additionFactorsService = Stub()
     SubtractionFactorsService subtractionFactorsService = Stub()
-    FactorGenerator factorGenerator = Stub()
+    FactorGenerator factorGenerator = Mock()
     @Subject
     MathOperationService mathOperationService = new MathOperationService(additionFactorsService, subtractionFactorsService, factorGenerator)
 
