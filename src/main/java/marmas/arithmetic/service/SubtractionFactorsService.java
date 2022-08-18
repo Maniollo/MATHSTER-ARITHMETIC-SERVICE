@@ -2,10 +2,12 @@ package marmas.arithmetic.service;
 
 import lombok.AllArgsConstructor;
 import marmas.arithmetic.model.OperationFactors;
+import marmas.arithmetic.operation.FactorGenerator;
 import org.springframework.stereotype.Service;
 
 import static marmas.arithmetic.model.MathOperationType.SUBTRACTION;
 
+@Deprecated
 @Service
 @AllArgsConstructor
 public class SubtractionFactorsService {

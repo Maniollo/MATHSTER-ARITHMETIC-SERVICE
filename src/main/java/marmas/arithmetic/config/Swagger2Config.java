@@ -19,7 +19,7 @@ class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("marmas.arithmetic.controller"))
+                .apis(RequestHandlerSelectors.basePackage("marmas.operation"))
                 .paths(PathSelectors.any())
                 .build();
     }

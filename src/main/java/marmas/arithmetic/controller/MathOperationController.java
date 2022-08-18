@@ -20,6 +20,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@Deprecated
 @RestController
 @RequiredArgsConstructor
 @Validated

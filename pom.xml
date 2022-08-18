@@ -11,12 +11,12 @@
 
     <groupId>marmas</groupId>
     <artifactId>mathster-arithmetic-service</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>MATHSTER-ARITHMETIC-SERVICE</name>
 
     <properties>
         <java.version>11</java.version>
-        <spock.version>2.1-groovy-2.5</spock.version>
+        <spock.version>2.1-groovy-3.0</spock.version>
         <compiler.plugin.version>3.8.0</compiler.plugin.version>
         <surefire.plugin.version>2.22.2</surefire.plugin.version>
         <failsafe.plugin.version>2.22.2</failsafe.plugin.version>
@@ -26,6 +26,7 @@
         <lombok.version>1.18.22</lombok.version>
         <liquibase.version>4.15.0</liquibase.version>
         <mysqlconnector.version>8.0.30</mysqlconnector.version>
+        <groovy.version>3.0.12</groovy.version>
     </properties>
 
     <dependencies>
@@ -93,7 +94,7 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
-            <version>2.5.14</version>
+            <version>${groovy.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

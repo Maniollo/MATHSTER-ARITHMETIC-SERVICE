@@ -78,7 +78,7 @@ public class TaskSheetGenerator {
         table.setHorizontalAlignment(ALIGN_LEFT);
 
         operationFactors.forEach(it -> {
-            Phrase operation = new Phrase(new Chunk(it.getFactorA() + " " + it.getOperationType().getSign() + " " + it.getFactorB() + " = ", CELL_FONT));
+            Phrase operation = new Phrase(new Chunk(it.getOperationType().getFuncFormat().apply(it.getFactorA(), it.getFactorB()) + " = ", CELL_FONT));
             PdfPCell cell = new PdfPCell(operation);
             cell.setVerticalAlignment(ALIGN_CENTER);
             cell.setHorizontalAlignment(ALIGN_RIGHT);

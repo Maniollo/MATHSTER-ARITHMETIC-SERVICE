@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Service Error")
 })
-@interface ResponseContract {
+public @interface ResponseContract {
 }

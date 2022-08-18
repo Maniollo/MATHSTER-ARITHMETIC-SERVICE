@@ -6,12 +6,15 @@ import marmas.arithmetic.model.MathOperationType
 import marmas.arithmetic.model.OperationFactors
 import marmas.arithmetic.model.ResultAttemptRequest
 import marmas.arithmetic.repository.ResultAttemptRepository
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Subject
 
 import static marmas.arithmetic.model.MathOperationType.ADDITION
 import static marmas.arithmetic.model.MathOperationType.SUBTRACTION
 
+@Deprecated
+@Ignore
 class ResultAttemptRequestServiceSpec extends Specification {
     ResultAttemptRepository resultAttemptRepository = Mock()
     @Subject

@@ -4,6 +4,7 @@ package marmas.arithmetic.service
 import com.itextpdf.text.pdf.PdfReader
 import com.itextpdf.text.pdf.parser.PdfTextExtractor
 import marmas.arithmetic.model.OperationFactors
+import marmas.arithmetic.operation.OperationService
 import marmas.arithmetic.pdf.TaskSheetGenerator
 import spock.lang.Specification
 import spock.lang.Subject
@@ -12,14 +13,14 @@ import static marmas.arithmetic.model.MathOperationType.ADDITION
 import static marmas.arithmetic.model.MathOperationType.SUBTRACTION
 
 class TaskSheetServiceSpec extends Specification {
-    private MathOperationService mathOperationService = Stub()
+    private OperationService mathOperationService = Stub()
     private TaskSheetGenerator taskSheetGenerator = new TaskSheetGenerator()
     @Subject
     TaskSheetService taskSheetService = new TaskSheetService(mathOperationService, taskSheetGenerator)
 
     def "should create the task sheet"() {
         given:
-        mathOperationService.getBulkFactors([ADDITION, SUBTRACTION], 100, 33) >> [
+        mathOperationService.getRandomNTimesFor([ADDITION, SUBTRACTION], 100, 33) >> [
                 new OperationFactors(48, 31, ADDITION), new OperationFactors(23, 32, ADDITION), new OperationFactors(69, 13, SUBTRACTION),
                 new OperationFactors(70, 10, SUBTRACTION), new OperationFactors(98, 1, ADDITION), new OperationFactors(41, 55, ADDITION),
                 new OperationFactors(4, 19, ADDITION), new OperationFactors(19, 27, ADDITION), new OperationFactors(31, 3, ADDITION),

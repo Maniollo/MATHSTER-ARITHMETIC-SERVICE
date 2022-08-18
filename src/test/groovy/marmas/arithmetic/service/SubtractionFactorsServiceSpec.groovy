@@ -1,10 +1,12 @@
 package marmas.arithmetic.service
 
 import marmas.arithmetic.model.OperationFactors
+import marmas.arithmetic.operation.FactorGenerator
 import spock.lang.Specification
 
 import static marmas.arithmetic.model.MathOperationType.SUBTRACTION
 
+@Deprecated
 class SubtractionFactorsServiceSpec extends Specification {
 
     public static final int RANGE = 10

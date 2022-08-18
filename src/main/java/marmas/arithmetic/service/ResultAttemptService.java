@@ -38,13 +38,7 @@ public class ResultAttemptService {
     private boolean checkAttempt(OperationFactors operationFactors, int result) {
         MathOperationType operationType = ofNullable(operationFactors.getOperationType())
                 .orElseThrow(() -> new InvalidRequestException("Operation type is missing."));
-        switch (operationType) {
-            case ADDITION:
-                return operationFactors.getFactorA() + operationFactors.getFactorB() == result;
-            case SUBTRACTION:
-                return operationFactors.getFactorA() - operationFactors.getFactorB() == result;
-            default:
-                throw new InvalidRequestException("Unsupported operation type.");
-        }
+
+        return operationType.getFuncCalc().apply(operationFactors.getFactorA(), operationFactors.getFactorB()) == result;
     }
 }

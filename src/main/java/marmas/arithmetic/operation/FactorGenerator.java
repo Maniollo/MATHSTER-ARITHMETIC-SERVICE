@@ -1,4 +1,4 @@
-package marmas.arithmetic.service;
+package marmas.arithmetic.operation;
 
 import org.springframework.stereotype.Component;
 

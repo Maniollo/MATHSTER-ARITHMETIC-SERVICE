@@ -16,6 +16,7 @@ import static marmas.arithmetic.model.MathOperationType.SUBTRACTION
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
+@Deprecated
 @WebMvcTest(controllers = MathOperationController)
 class MathOperationTypeFactorsControllerSpec extends Specification {
     @Autowired

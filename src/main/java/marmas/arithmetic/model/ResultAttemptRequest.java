@@ -14,7 +14,5 @@ public class ResultAttemptRequest {
     @NotNull(message = "Operation Factors must be provided")
     private final OperationFactors operationFactors;
     private final int result;
-    @AssertFalse(message = "Flag isCorrect cannot be set")
-    private final boolean correct;
     private final int attemptNumber;
 }

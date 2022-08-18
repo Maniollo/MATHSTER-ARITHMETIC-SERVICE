@@ -23,10 +23,10 @@ class ResultAttemptSpecIT extends Specification {
 
     def "should store result attempt"() {
         when:
-        mvc.perform(MockMvcRequestBuilders.post("/results")
+        mvc.perform(MockMvcRequestBuilders.post("/api/operations")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":8,\"isCorrect\":false}"))
+                .content("{\"operationFactors\":{\"factorA\":3,\"factorB\":5,\"operationType\":\"ADDITION\"},\"result\":8}"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
         then:
         resultAttemptRepository.findAll() == [new ResultAttemptEntity(1, 3, 5, MathOperationType.ADDITION, 8, true)]

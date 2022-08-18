@@ -1,16 +1,18 @@
 package marmas.arithmetic.service
 
 import marmas.arithmetic.model.OperationFactors
+import marmas.arithmetic.operation.FactorGenerator
 import spock.lang.Specification
 import spock.lang.Subject
 
 import static marmas.arithmetic.model.MathOperationType.ADDITION
 import static marmas.arithmetic.model.MathOperationType.SUBTRACTION
 
+@Deprecated
 class MathOperationServiceSpec extends Specification {
     AdditionFactorsService additionFactorsService = Stub()
     SubtractionFactorsService subtractionFactorsService = Stub()
-    FactorGenerator factorGenerator = Mock()
+  FactorGenerator factorGenerator = Mock()
     @Subject
     MathOperationService mathOperationService = new MathOperationService(additionFactorsService, subtractionFactorsService, factorGenerator)
 

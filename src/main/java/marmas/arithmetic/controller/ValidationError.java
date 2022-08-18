@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Getter
-class ValidationError {
+public class ValidationError {
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<String> errors = new ArrayList<>();

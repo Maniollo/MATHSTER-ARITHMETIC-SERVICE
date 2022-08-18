@@ -5,7 +5,7 @@ services:
   mathster-arithmetic-service:
     container_name: mathster-arithmetic-service
     build: .
-    image: mathster-arithmetic-service:0.0.1
+    image: mathster-arithmetic-service:0.0.2
     ports:
       - "8080:8080"
     depends_on:

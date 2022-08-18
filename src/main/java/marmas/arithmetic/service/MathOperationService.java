@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marmas.arithmetic.model.MathOperationType;
 import marmas.arithmetic.model.OperationFactors;
+import marmas.arithmetic.operation.FactorGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.stream.IntStream;
 
 import static java.lang.String.format;
 
+@Deprecated
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -36,7 +38,7 @@ public class MathOperationService {
             default:
                 throw new UnsupportedOperationException(format("%s operation is unsupported", operation.name()));
         }
-        log.info("Generated: {} {} {}", factors.getFactorA(), factors.getOperationType().getSign(), factors.getFactorB());
+        log.info("Generated: {}", factors.getOperationType().getFuncFormat().apply(factors.getFactorA(), factors.getFactorB()));
         return factors;
     }
 

@@ -1,5 +1,6 @@
-package marmas.arithmetic.service
+package marmas.arithmetic.operation
 
+import marmas.arithmetic.operation.FactorGenerator
 import spock.lang.Specification
 
 import java.util.stream.IntStream
