@@ -20,7 +20,7 @@
         <compiler.plugin.version>3.8.0</compiler.plugin.version>
         <surefire.plugin.version>2.22.2</surefire.plugin.version>
         <failsafe.plugin.version>2.22.2</failsafe.plugin.version>
-        <itext.version>5.5.13</itext.version>
+        <itext.version>5.5.13.3</itext.version>
         <swagger.version>3.0.0</swagger.version>
         <h2.version>2.1.214</h2.version>
         <lombok.version>1.18.22</lombok.version>
